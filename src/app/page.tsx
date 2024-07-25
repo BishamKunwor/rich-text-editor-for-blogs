@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Editor from "../rich-text-editor/Editor";
-import { compileMDX } from "next-mdx-remote/rsc";
 import dayjs from "dayjs";
 
 export default function Home() {
@@ -14,7 +13,9 @@ export default function Home() {
 
   useEffect(() => {
     async function test() {
-      const { content: test } = await compileMDX({ source: content });
+      const { content: test } = await (
+        await import("next-mdx-remote/rsc")
+      ).compileMDX({ source: content });
 
       setSerializedContent(test);
     }
